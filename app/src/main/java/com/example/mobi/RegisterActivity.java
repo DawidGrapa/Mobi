@@ -17,6 +17,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+
+import java.security.spec.ECField;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -62,7 +66,16 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             startActivity(new Intent(getApplicationContext(), LoggedPageActivity.class));
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Failed to create account.", Toast.LENGTH_SHORT).show();
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthUserCollisionException existEmail) {
+                                Toast.makeText(RegisterActivity.this, "Account with these email exists.", Toast.LENGTH_SHORT).show();
+                            }catch (FirebaseAuthWeakPasswordException toWeakPassword) {
+                                Toast.makeText(RegisterActivity.this, "Password is to weak.", Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                Toast.makeText(RegisterActivity.this, "Failed to create account.", Toast.LENGTH_SHORT).show();
+                            }
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 });

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#333232"
     android:orientation="vertical">
 
     <TextView
@@ -9,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/allerta"
+        android:fontFamily="@font/arsenal_italic"
         android:gravity="center"
         android:text="E-mail"
         android:textColor="#FFFFFF"
@@ -22,16 +23,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="18dp"
         android:hint="Type E-mail"
-        android:inputType="textPersonName"
-        android:textColor="#DCDCDC"
-        android:textColorHint="#CCCCCC" />
+        android:inputType="textPersonName"/>
 
     <TextView
         android:id="@+id/registerTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/allerta"
+        android:fontFamily="@font/arsenal_italic"
         android:gravity="center"
         android:text="Password"
         android:textColor="#FFFFFF"
@@ -45,20 +44,17 @@
         android:layout_margin="18dp"
         android:ems="10"
         android:hint="Type password"
-        android:inputType="textPassword"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FBFBFB" />
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/loginButton"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="#0F8F9F"
+        android:layout_margin="18dp"
         android:shadowColor="#C51F1F"
         android:text="Login"
-        android:layout_margin="18dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#AFAFAF" />
 
