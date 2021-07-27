@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()) {
                         startActivity(new Intent(getApplicationContext(), LoggedPageActivity.class));
+                        finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Failed to Log in.", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.INVISIBLE);
@@ -72,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                finish();
             }
         });
     }

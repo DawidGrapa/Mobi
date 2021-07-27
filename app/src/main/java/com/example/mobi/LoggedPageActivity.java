@@ -23,7 +23,6 @@ public class LoggedPageActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        Log.w("EMAIL", firebaseUser.getEmail());
     }
 
     public void logout(View view) {

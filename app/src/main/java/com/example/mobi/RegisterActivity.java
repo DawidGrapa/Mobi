@@ -65,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             startActivity(new Intent(getApplicationContext(), LoggedPageActivity.class));
+                            finish();
                         } else {
                             try {
                                 throw task.getException();
@@ -86,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
             }
         });
     }
