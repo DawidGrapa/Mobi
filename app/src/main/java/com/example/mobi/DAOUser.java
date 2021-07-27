@@ -1,7 +1,6 @@
 package com.example.mobi;
 
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,43 +13,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
 
-public class DAOHuman {
+public class DAOUser {
 
     FirebaseDatabase db;
     DatabaseReference reference;
 
 
-    public DAOHuman() {
+    public DAOUser() {
         db = FirebaseDatabase.getInstance();
-        reference = db.getReference(Human.class.getSimpleName());
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<HashMap<String, Human>> t = new GenericTypeIndicator<HashMap<String, Human>>() {};
-                HashMap<String, Human> humanList = dataSnapshot.getValue(t);
-                for(String key : humanList.keySet()) {
-                    Log.w("dane", humanList.get(key).getFirstName());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("asd","Failed to read value.", error.toException());
-            }
-        });
-
+        reference = db.getReference(User.class.getSimpleName());
     }
 
-    public void add(Human human) {
-        reference.push().setValue(human);
+    public void add(User user) {
+        reference.push().setValue(user);
     }
 
 }
