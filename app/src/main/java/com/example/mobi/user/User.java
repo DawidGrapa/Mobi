@@ -3,8 +3,34 @@ package com.example.mobi.user;
 public class User {
 
     private String firstName;
-    private String lastName;
     private String email;
+    private String description;
+    private String age;
+    private String sex;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
     public User(String firstName, String email) {
         this.firstName = firstName;
@@ -29,11 +55,4 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 }

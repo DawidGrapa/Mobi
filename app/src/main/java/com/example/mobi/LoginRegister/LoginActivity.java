@@ -38,59 +38,56 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser() == null) {
 
-            setContentView(R.layout.activity_login);
 
-            email = findViewById(R.id.emailInput);
-            password = findViewById(R.id.passwordInput);
-            loginButton = findViewById(R.id.loginButton);
-            progressBar = findViewById(R.id.loginProgressBar);
-            goToRegister = findViewById(R.id.goToRegister);
-            firebaseAuth = FirebaseAuth.getInstance();
+        setContentView(R.layout.activity_login);
 
-            loginButton.setOnClickListener(v -> {
-                String emailValue = email.getText().toString();
-                String passwordValue = password.getText().toString();
+        email = findViewById(R.id.emailInput);
+        password = findViewById(R.id.passwordInput);
+        loginButton = findViewById(R.id.loginButton);
+        progressBar = findViewById(R.id.loginProgressBar);
+        goToRegister = findViewById(R.id.goToRegister);
+        firebaseAuth = FirebaseAuth.getInstance();
 
-                if (TextUtils.isEmpty(emailValue)) {
-                    email.setError("Email is required.");
-                    return;
-                }
+        loginButton.setOnClickListener(v -> {
+            String emailValue = email.getText().toString();
+            String passwordValue = password.getText().toString();
 
-                if (TextUtils.isEmpty(passwordValue)) {
-                    password.setError("Password is required.");
-                    return;
-                }
+            if (TextUtils.isEmpty(emailValue)) {
+                email.setError("Email is required.");
+                return;
+            }
 
-                progressBar.setVisibility(View.VISIBLE);
-                closeKeyboard();
+            if (TextUtils.isEmpty(passwordValue)) {
+                password.setError("Password is required.");
+                return;
+            }
 
-                firebaseAuth.signInWithEmailAndPassword(emailValue, passwordValue).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            startActivity(new Intent(getApplicationContext(), LoggedIn.class));
-                            finish();
-                        } else {
-                            Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
-            });
+            progressBar.setVisibility(View.VISIBLE);
+            closeKeyboard();
 
-            goToRegister.setOnClickListener(new View.OnClickListener() {
+            firebaseAuth.signInWithEmailAndPassword(emailValue, passwordValue).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-                    finish();
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        startActivity(new Intent(getApplicationContext(), LoggedIn.class));
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
                 }
             });
-        } else {
-            startActivity(new Intent(getApplicationContext(), LoggedIn.class));
-            finish();
-        }
+        });
+
+        goToRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                finish();
+            }
+        });
+
     }
 
     private void closeKeyboard () {

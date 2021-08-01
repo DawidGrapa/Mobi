@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="appBg">#302F2F</color>
     <color name="buttonBg">#4C4949</color>
+    <color name="cardBg">#656161</color>
 
 </resources>

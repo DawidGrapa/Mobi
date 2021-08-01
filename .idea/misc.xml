@@ -13,6 +13,7 @@
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_stars.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_stars_logo.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_user.xml" value="0.21458333333333332" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout-v23/fragment_pairing.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_logged_in.xml" value="0.21666666666666667" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_logged_in2.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_logged_page.xml" value="0.22" />
@@ -20,6 +21,7 @@
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_show_matches.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_starting_screen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_user_settings.xml" value="0.2" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/fragment_logged_in.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/fragment_logged_in2.xml" value="0.2171875" />
         <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/fragment_matches.xml" value="0.2609375" />

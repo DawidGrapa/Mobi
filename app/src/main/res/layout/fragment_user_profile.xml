@@ -3,22 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".tabs.UserProfile">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
+
 
         <TextView
             android:id="@+id/helloUserProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="asd"
+            android:gravity="center"
             android:layout_margin="20dp"
+            android:layout_weight="100"
+            android:textSize="30sp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_weight="1"
-            android:textSize="30dp" />
+            android:src="@drawable/edit_info"
+            android:layout_margin="20dp"
+            android:onClick="userSettings"/>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/userProfileImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_anxiety"/>
+
+    <TextView
+        android:id="@+id/userProfileDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:textColor="@color/white"
+        android:text="asd"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom">
 
         <ImageButton
             android:id="@+id/logoutButton"
@@ -26,15 +63,11 @@
             android:layout_height="32dp"
             android:layout_margin="20dp"
             android:onClick="logout"
+            android:layout_gravity="right"
             android:src="@drawable/logout"
-            tools:ignore="UsingOnClickInXml" />
+            tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/userProgressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

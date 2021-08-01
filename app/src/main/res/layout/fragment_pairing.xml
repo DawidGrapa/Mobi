@@ -4,9 +4,40 @@
     android:layout_height="match_parent"
     android:background="@color/appBg">
 
-    <include
-        layout="@layout/item"
-        />
+
+        <LinearLayout
+            android:id="@+id/noMatches"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="100dp"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_anxiety"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:textSize="20sp"
+                android:text="@string/no_potential_match"/>
+
+        </LinearLayout>
+
+
+
+
+
+    <com.lorentzos.flingswipe.SwipeFlingAdapterView
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:id="@+id/bottom_panel"

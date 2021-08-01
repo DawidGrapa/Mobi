@@ -20,13 +20,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 public class UserProfile extends Fragment {
 
     public UserProfile() {
     }
 
     User user;
-    ProgressBar progressBar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,16 +38,18 @@ public class UserProfile extends Fragment {
         View view =  lf.inflate(R.layout.fragment_user_profile, container, false); //pass the correct layout name for the fragment
 
         DAOUser daoUser = new DAOUser();
-        progressBar = view.findViewById(R.id.userProgressBar);
+
         FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 user = (User) snapshot.getValue(User.class);
-                TextView text = (TextView) view.findViewById(R.id.helloUserProfile);
+                TextView name = (TextView) view.findViewById(R.id.helloUserProfile);
+                TextView desc = (TextView) view.findViewById(R.id.userProfileDescription);
 
-                text.setText("Hello " + user.getFirstName() + "\nEmail: " + user.getEmail());
-                progressBar.setVisibility(View.INVISIBLE);
+
+                desc.setText(user.getDescription());
+                name.setText("Hello " + user.getFirstName());
             }
 
             @Override

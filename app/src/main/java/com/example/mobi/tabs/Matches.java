@@ -10,11 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.mobi.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Matches#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Matches extends Fragment {
 
     public Matches() {
