@@ -33,6 +33,8 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/fragment_pairing.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/fragment_user_profile.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/item.xml" value="0.15070921985815602" />
       </map>
     </option>
   </component>
