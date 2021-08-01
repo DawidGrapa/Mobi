@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3828125" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable-v24/ic_stars.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable-v24/ic_stars_logo.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_logout.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_man_user.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_speak.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_stars.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_stars_logo.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/drawable/ic_user.xml" value="0.21458333333333332" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_logged_in.xml" value="0.21666666666666667" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_logged_in2.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_logged_page.xml" value="0.22" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_register.xml" value="0.33" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_show_matches.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/activity_starting_screen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/fragment_logged_in.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/fragment_logged_in2.xml" value="0.2171875" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/fragment_matches.xml" value="0.2609375" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/fragment_pairing.xml" value="0.24583333333333332" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/fragment_user_profile.xml" value="0.21" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/layout/item.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Root/AndroidStudioProjects/Mobi/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22135416666666666" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
@@ -25,7 +56,7 @@
     </option>
     <option name="myNotNulls">
       <value>
-        <list size="13">
+        <list size="14">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
           <item index="1" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
           <item index="2" class="java.lang.String" itemvalue="android.support.annotation.NonNull" />
@@ -39,6 +70,7 @@
           <item index="10" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
           <item index="11" class="java.lang.String" itemvalue="io.reactivex.annotations.NonNull" />
           <item index="12" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.NonNull" />
+          <item index="13" class="java.lang.String" itemvalue="lombok.NonNull" />
         </list>
       </value>
     </option>
