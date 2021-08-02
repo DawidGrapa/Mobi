@@ -1,5 +1,6 @@
 package com.example.mobi.tabs;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,20 +12,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.mobi.arrayAdapter;
 import com.example.mobi.cards.Card;
 
 import com.example.mobi.R;
+import com.example.mobi.user.DAOUser;
 import com.example.mobi.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +43,9 @@ public class Pairing extends Fragment {
     View view;
     SwipeFlingAdapterView swipeFlingAdapterView;
     LinearLayout noMatch;
+    User user;
+    DAOUser daoUser;
+    User potentialPair;
 
     public Pairing() {
     }
@@ -58,11 +66,29 @@ public class Pairing extends Fragment {
 
         getPotentialMatches();
 
+        daoUser = new DAOUser();
+
+        FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @SuppressLint({"SetTextI18n", "ResourceType"})
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                user = (User) snapshot.getValue(User.class);
+                user.setLikedUsers((HashMap<String, Object>) snapshot.child("LikedUsers").getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
         arrayAdapter = new arrayAdapter(view.getContext(), R.layout.item, potentialMatches);
 
         swipeFlingAdapterView.setAdapter(arrayAdapter);
+
+        checkIfArrayAdapterIsEmpty();
 
         swipeFlingAdapterView.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -79,6 +105,10 @@ public class Pairing extends Fragment {
             @Override
             public void onRightCardExit(Object o) {
                 checkIfArrayAdapterIsEmpty();
+                Card card = (Card) o;
+                potentialPair = card.getUser();
+                user.addLikedUser(potentialPair);
+                daoUser.updateLikedUsers(user);
             }
 
             @Override
@@ -106,7 +136,7 @@ public class Pairing extends Fragment {
         db.getReference().child(User.class.getSimpleName()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-                if(dataSnapshot.exists() && !dataSnapshot.getKey().equals(currentUid)) {
+                if(dataSnapshot.exists() && !dataSnapshot.getKey().equals(currentUid) && !user.containsMeAsLiked((User) dataSnapshot.getValue(User.class))) {
                     Card item = new Card((User) dataSnapshot.getValue(User.class));
                     potentialMatches.add(item);
                     arrayAdapter.notifyDataSetChanged();
@@ -118,8 +148,12 @@ public class Pairing extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-
+                User common = (User) snapshot.getValue(User.class);
+                if(snapshot.child("LikedUsers").hasChild(currentUid) && user.containsMeAsLiked(common)) {
+                    Toast.makeText(getContext(), "You have new pair!", Toast.LENGTH_LONG).show();
+                }
             }
+
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {

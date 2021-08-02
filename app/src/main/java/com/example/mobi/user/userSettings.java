@@ -9,11 +9,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.mobi.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +51,7 @@ public class userSettings extends AppCompatActivity {
                 desc = findViewById(R.id.userDesc);
                 age = findViewById(R.id.userAge);
                 sex = findViewById(R.id.userSex);
+
 
                 male = findViewById(R.id.male);
                 female = findViewById(R.id.female);

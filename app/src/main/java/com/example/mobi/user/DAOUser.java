@@ -20,6 +20,7 @@ public class DAOUser {
     public void add(User user) {
         String id = firebaseAuth.getUid();
         assert id != null;
+        user.setUid(id);
         db.getReference().child(User.class.getSimpleName()).child(id).setValue(user);
     }
 
@@ -34,5 +35,9 @@ public class DAOUser {
 
     public String getUid() {
         return firebaseAuth.getUid();
+    }
+
+    public void updateLikedUsers(User user) {
+        db.getReference().child(User.class.getSimpleName()).child(user.getUid()).child("LikedUsers").updateChildren(user.getLikedUsers());
     }
 }

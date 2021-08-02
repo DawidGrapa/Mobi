@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.mobi.user.DAOUser;
 import com.example.mobi.R;
 import com.example.mobi.user.User;
@@ -28,7 +30,7 @@ public class UserProfile extends Fragment {
     }
 
     User user;
-
+    ImageView userImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,10 +48,23 @@ public class UserProfile extends Fragment {
                 user = (User) snapshot.getValue(User.class);
                 TextView name = (TextView) view.findViewById(R.id.helloUserProfile);
                 TextView desc = (TextView) view.findViewById(R.id.userProfileDescription);
+                userImage = (ImageView) view.findViewById(R.id.userProfileImage);
+
 
 
                 desc.setText(user.getDescription());
                 name.setText("Hello " + user.getFirstName());
+
+                if (user.getImageUri() == null && user.getSex() == null) {
+                    userImage.setImageResource(R.drawable.ic_user);
+                } else if (user.getSex().equals("Male") && user.getImageUri() == null) {
+                    userImage.setImageResource(R.drawable.ic_man);
+                } else if (user.getSex().equals("Female") && user.getImageUri() == null) {
+                    userImage.setImageResource(R.drawable.ic_woman);
+                } else if (user.getImageUri() != null){
+                    Glide.with(view.getContext()).load(user.getImageUri()).into(userImage);
+                }
+
             }
 
             @Override
