@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
@@ -73,7 +74,6 @@ public class Pairing extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 user = (User) snapshot.getValue(User.class);
-                user.setLikedUsers((HashMap<String, Object>) snapshot.child("LikedUsers").getValue());
             }
 
             @Override
@@ -87,8 +87,6 @@ public class Pairing extends Fragment {
         arrayAdapter = new arrayAdapter(view.getContext(), R.layout.item, potentialMatches);
 
         swipeFlingAdapterView.setAdapter(arrayAdapter);
-
-        checkIfArrayAdapterIsEmpty();
 
         swipeFlingAdapterView.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -107,8 +105,8 @@ public class Pairing extends Fragment {
                 checkIfArrayAdapterIsEmpty();
                 Card card = (Card) o;
                 potentialPair = card.getUser();
-                user.addLikedUser(potentialPair);
-                daoUser.updateLikedUsers(user);
+                db.getReference().child(User.class.getSimpleName()).child(potentialPair.getUid()).child("Connections").child(currentUid).setValue(true);
+                isConnectionMatch(potentialPair.getUid());
             }
 
             @Override
@@ -125,6 +123,26 @@ public class Pairing extends Fragment {
         return view;
     }
 
+    private void isConnectionMatch(String userID) {
+        DatabaseReference currentUserDB = db.getReference().child(User.class.getSimpleName()).child(currentUid).child("Connections").child(userID);
+        //db.getReference().child(User.class.getSimpleName()).
+        if(!currentUid.equals(userID)){
+            currentUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()) {
+                        Toast.makeText(getContext(), "You have new Pair!", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    }
+
     private void checkIfArrayAdapterIsEmpty() {
         if(arrayAdapter.isEmpty()) {
             noMatch = view.findViewById(R.id.noMatches);
@@ -136,22 +154,20 @@ public class Pairing extends Fragment {
         db.getReference().child(User.class.getSimpleName()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-                if(dataSnapshot.exists() && !dataSnapshot.getKey().equals(currentUid) && !user.containsMeAsLiked((User) dataSnapshot.getValue(User.class))) {
+                if(dataSnapshot.exists() && !dataSnapshot.getKey().equals(currentUid)) {//TODO
                     Card item = new Card((User) dataSnapshot.getValue(User.class));
                     potentialMatches.add(item);
                     arrayAdapter.notifyDataSetChanged();
                     noMatch = view.findViewById(R.id.noMatches);
                     noMatch.setVisibility(View.INVISIBLE);
+                    checkIfArrayAdapterIsEmpty();
                 }
 
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-                User common = (User) snapshot.getValue(User.class);
-                if(snapshot.child("LikedUsers").hasChild(currentUid) && user.containsMeAsLiked(common)) {
-                    Toast.makeText(getContext(), "You have new pair!", Toast.LENGTH_LONG).show();
-                }
+
             }
 
 

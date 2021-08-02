@@ -36,8 +36,4 @@ public class DAOUser {
     public String getUid() {
         return firebaseAuth.getUid();
     }
-
-    public void updateLikedUsers(User user) {
-        db.getReference().child(User.class.getSimpleName()).child(user.getUid()).child("LikedUsers").updateChildren(user.getLikedUsers());
-    }
 }

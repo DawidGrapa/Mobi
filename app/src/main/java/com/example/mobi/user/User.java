@@ -12,17 +12,9 @@ public class User {
     private String age;
     private String sex;
     private String imageUri;
-    private HashMap<String, Object> likedUsers = new HashMap<>();
     private String uid;
 
-    public void setLikedUsers(HashMap<String, Object> likedUsers) {
-        if(likedUsers != null)
-            this.likedUsers = likedUsers;
-    }
 
-    public HashMap<String, Object> getLikedUsers() {
-        return likedUsers;
-    }
 
     public String getUid() {
         return uid;
@@ -87,12 +79,6 @@ public class User {
         this.firstName = firstName;
     }
 
-    public void addLikedUser(User user) {
-        likedUsers.put(user.getUid(), user);
-    }
 
-    public boolean containsMeAsLiked(User user) {
-        return likedUsers.containsKey(user.getUid());
-    }
 
 }
