@@ -48,7 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
         android:textColor="@color/white"
-        android:text="asd"
         android:gravity="center"
         android:textSize="20sp"/>
 
