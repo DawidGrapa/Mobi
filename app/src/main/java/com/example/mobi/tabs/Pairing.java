@@ -43,6 +43,7 @@ public class Pairing extends Fragment {
     View view;
     View parentView;
     SwipeFlingAdapterView swipeFlingAdapterView;
+    LinearLayout noMatch;
 
     public Pairing() {
     }
@@ -102,7 +103,7 @@ public class Pairing extends Fragment {
 
     private void checkIfArrayAdapterIsEmpty() {
         if(arrayAdapter.isEmpty()) {
-            LinearLayout noMatch = view.findViewById(R.id.noMatches);
+            noMatch = view.findViewById(R.id.noMatches);
             noMatch.setVisibility(View.VISIBLE);
         }
     }
@@ -115,6 +116,8 @@ public class Pairing extends Fragment {
                     Card item = new Card((User) dataSnapshot.getValue(User.class));
                     potentialMatches.add(item);
                     arrayAdapter.notifyDataSetChanged();
+                    noMatch = view.findViewById(R.id.noMatches);
+                    noMatch.setVisibility(View.INVISIBLE);
                 }
 
             }
