@@ -38,13 +38,10 @@
     </RelativeLayout>
 
 
-
-
-
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/bottom_panel"
@@ -54,24 +51,24 @@
         android:layout_alignParentBottom="true"
         android:background="@color/appBg">
 
-
         <ImageButton
             android:id="@+id/imageButton5"
-            android:layout_width="50dp"
+            android:layout_width="10dp"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:src="@drawable/cross"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:background="@color/buttonBg"/>
 
         <ImageButton
             android:id="@+id/imageButton4"
-            android:layout_width="50dp"
+            android:layout_width="10dp"
             android:layout_height="50dp"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:src="@drawable/heart"
             android:background="@color/buttonBg"/>
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -38,6 +38,7 @@ public class arrayAdapter extends ArrayAdapter<Card> {
         }
         ImageView img = (ImageView) convertView.findViewById(R.id.pairImage);
         TextView name = (TextView) convertView.findViewById(R.id.pairName);
+        TextView desc = convertView.findViewById(R.id.pairDesc);
 
         if(user.getAge() == null) {
             name.setText(user.getFirstName());
@@ -56,6 +57,10 @@ public class arrayAdapter extends ArrayAdapter<Card> {
             Glide.with(convertView.getContext()).load(user.getImageUri()).into(img);
         }
 
+        if(user.getDescription()!=null) {
+            if(user.getDescription().length() > 100)
+                desc.setText(user.getDescription().substring(0, 100));
+        }
 
         return convertView;
     }

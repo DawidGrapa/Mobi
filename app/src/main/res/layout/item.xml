@@ -38,6 +38,14 @@
                 android:layout_height="200dp"
                 android:background="@color/cardBg" />
 
+            <TextView
+                android:id="@+id/pairDesc"
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=""/>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
