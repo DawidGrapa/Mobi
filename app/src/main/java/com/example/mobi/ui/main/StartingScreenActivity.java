@@ -1,4 +1,4 @@
-package com.example.mobi;
+package com.example.mobi.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.mobi.LoginRegister.LoginActivity;
+import com.example.mobi.LoginRegister.LoggedIn;
+import com.example.mobi.R;
 
-public class StartingScreen extends AppCompatActivity {
+public class StartingScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,7 @@ public class StartingScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(StartingScreen.this, LoggedIn.class);
+                Intent intent = new Intent(StartingScreenActivity.this, LoggedIn.class);
                 startActivity(intent);
                 finish();
             }

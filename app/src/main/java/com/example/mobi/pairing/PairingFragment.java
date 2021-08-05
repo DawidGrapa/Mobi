@@ -1,4 +1,4 @@
-package com.example.mobi.tabs;
+package com.example.mobi.pairing;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.mobi.arrayAdapter;
 import com.example.mobi.cards.Card;
 
 import com.example.mobi.R;
@@ -30,11 +29,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class Pairing extends Fragment {
+public class PairingFragment extends Fragment {
 
     List<Card> potentialMatches = new ArrayList<>();
     ArrayAdapter arrayAdapter;
@@ -49,7 +47,7 @@ public class Pairing extends Fragment {
     DAOUser daoUser;
     User potentialPair;
 
-    public Pairing() {
+    public PairingFragment() {
     }
 
     @Override
@@ -70,24 +68,19 @@ public class Pairing extends Fragment {
 
         daoUser = new DAOUser();
 
-        usersDB.child(daoUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @SuppressLint({"SetTextI18n", "ResourceType"})
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                user = (User) snapshot.getValue(User.class);
-                lookUpForMatches();
-            }
+        getUser();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        lookUpForMatches();
 
 
         arrayAdapter = new arrayAdapter(view.getContext(), R.layout.item, potentialMatches);
 
+        setFlingRecycleView();
+
+        return view;
+    }
+
+    private void setFlingRecycleView() {
         swipeFlingAdapterView.setAdapter(arrayAdapter);
 
         swipeFlingAdapterView.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -102,7 +95,7 @@ public class Pairing extends Fragment {
                 checkIfArrayAdapterIsEmpty();
                 Card card = (Card) o;
                 potentialPair = card.getUser();
-                usersDB.child(potentialPair.getUid()).child("Connections").child("NOPE").child(currentUid).setValue(true);
+                usersDB.child(potentialPair.getUid()).child("Connections").child("NOPE").child(currentUid).setValue(false);
             }
 
             @Override
@@ -111,8 +104,8 @@ public class Pairing extends Fragment {
                 Card card = (Card) o;
                 potentialPair = card.getUser();
                 usersDB.child(potentialPair.getUid()).child("Connections").child("YES").child(currentUid).setValue(true);
-                isConnectionMatch(potentialPair.getUid());
-             }
+                isConnectionMatch(potentialPair);
+            }
 
             @Override
             public void onAdapterAboutToEmpty(int i) {
@@ -124,16 +117,16 @@ public class Pairing extends Fragment {
 
             }
         });
-
-        return view;
     }
 
     private void lookUpForMatches() {
         usersDB.child(currentUid).child("Connections").child("NotifyAboutMatch").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-                Toast.makeText(getContext(), "You have new pair!", Toast.LENGTH_SHORT).show();
-                usersDB.child(currentUid).child("Connections").child("NotifyAboutMatch").removeValue();
+                if(snapshot.exists()) {
+                    Toast.makeText(getContext(), "You have new pair!", Toast.LENGTH_SHORT).show();
+                    usersDB.child(currentUid).child("Connections").child("NotifyAboutMatch").removeValue();
+                }
             }
 
             @Override
@@ -158,7 +151,8 @@ public class Pairing extends Fragment {
         });
     }
 
-    private void isConnectionMatch(String userID) {
+    private void isConnectionMatch(User pair) {
+        String userID = pair.getUid();
         DatabaseReference currentUserDB = usersDB.child(currentUid).child("Connections").child("YES").child(userID);
         if(!currentUid.equals(userID)){
             currentUserDB.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -166,9 +160,12 @@ public class Pairing extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists()) {
                         Toast.makeText(getContext(), "You have new Pair!", Toast.LENGTH_SHORT).show();
-                        usersDB.child(userID).child("Connections").child("Matches").child(currentUid).setValue(true);
-                        usersDB.child(currentUid).child("Connections").child("Matches").child(userID).setValue(true);
-                        usersDB.child(userID).child("Connections").child("NotifyAboutMatch").child(userID).setValue(true);
+
+                        String key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
+
+                        usersDB.child(userID).child("Connections").child("Matches").child(currentUid).child("ChatID").setValue(key);
+                        usersDB.child(currentUid).child("Connections").child("Matches").child(userID).child("ChatID").setValue(key);
+                        usersDB.child(userID).child("Connections").child("NotifyAboutMatch").child(currentUid).setValue(true);
                     }
                 }
 
@@ -182,7 +179,7 @@ public class Pairing extends Fragment {
 
     private void checkIfArrayAdapterIsEmpty() {
         if(arrayAdapter.isEmpty()) {
-            noMatch = view.findViewById(R.id.noMatches);
+            noMatch = view.findViewById(R.id.noPotentialMatches);
             noMatch.setVisibility(View.VISIBLE);
         }
     }
@@ -191,11 +188,14 @@ public class Pairing extends Fragment {
         usersDB.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-                if(dataSnapshot.exists() && !dataSnapshot.getKey().equals(currentUid) && !dataSnapshot.child("Connections").child("YES").hasChild(currentUid) && !dataSnapshot.child("Connections").child("NOPE").hasChild(currentUid)) {//TODO
+                if(dataSnapshot.exists() && !dataSnapshot.getKey().equals(currentUid)
+                        && !dataSnapshot.child("Connections").child("YES").hasChild(currentUid)
+                        && !dataSnapshot.child("Connections").child("NOPE").hasChild(currentUid)
+                        && !dataSnapshot.child("Connections").child("Matches").hasChild(currentUid)) {
                     Card item = new Card((User) dataSnapshot.getValue(User.class));
                     potentialMatches.add(item);
                     arrayAdapter.notifyDataSetChanged();
-                    noMatch = view.findViewById(R.id.noMatches);
+                    noMatch = view.findViewById(R.id.noPotentialMatches);
                     noMatch.setVisibility(View.INVISIBLE);
                     checkIfArrayAdapterIsEmpty();
                 }
@@ -216,6 +216,21 @@ public class Pairing extends Fragment {
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getUser() {
+        usersDB.child(daoUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @SuppressLint({"SetTextI18n", "ResourceType"})
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                user = (User) snapshot.getValue(User.class);
             }
 
             @Override

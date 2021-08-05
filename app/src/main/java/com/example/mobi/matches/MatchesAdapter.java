@@ -38,7 +38,9 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MatchesViewHolder holder, int position) {
         User user = matchesList.get(position);
-        holder.matchID.setText(user.getFirstName());
+        holder.pairName.setText(user.getFirstName());
+        holder.pairImage = user.getImageUri();
+        holder.pairID = user.getUid();
         if (user.getImageUri() == null && user.getSex() == null) {
             holder.image.setImageResource(R.drawable.ic_user);
         } else if (user.getSex().equals("Male") && user.getImageUri() == null) {

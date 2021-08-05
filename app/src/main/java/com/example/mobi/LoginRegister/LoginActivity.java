@@ -15,7 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mobi.LoggedIn;
 import com.example.mobi.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +48,23 @@ public class LoginActivity extends AppCompatActivity {
         goToRegister = findViewById(R.id.goToRegister);
         firebaseAuth = FirebaseAuth.getInstance();
 
+        setLoginOnClick();
+
+        setGOTORegister();
+
+    }
+
+    private void setGOTORegister() {
+        goToRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                finish();
+            }
+        });
+    }
+
+    private void setLoginOnClick() {
         loginButton.setOnClickListener(v -> {
             String emailValue = email.getText().toString();
             String passwordValue = password.getText().toString();
@@ -79,15 +95,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         });
-
-        goToRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-                finish();
-            }
-        });
-
     }
 
     private void closeKeyboard () {

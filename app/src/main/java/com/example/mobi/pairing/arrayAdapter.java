@@ -1,8 +1,7 @@
-package com.example.mobi;
+package com.example.mobi.pairing;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.example.mobi.R;
 import com.example.mobi.cards.Card;
-import com.example.mobi.tabs.Pairing;
 import com.example.mobi.user.User;
 
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

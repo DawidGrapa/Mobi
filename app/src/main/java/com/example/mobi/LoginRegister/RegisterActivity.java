@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobi.user.DAOUser;
-import com.example.mobi.LoggedIn;
 import com.example.mobi.R;
 import com.example.mobi.user.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +46,23 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.registerProgressBar);
         firebaseAuth = FirebaseAuth.getInstance();
 
+        setRegisterOnClick();
+
+        setGOTOLogin();
+
+    }
+
+    private void setGOTOLogin() {
+        goToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
+        });
+    }
+
+    private void setRegisterOnClick() {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,14 +101,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
-            }
-        });
-
-        goToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
             }
         });
     }

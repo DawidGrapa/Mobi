@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class userSettings extends AppCompatActivity {
 
     Button save;
@@ -42,47 +44,16 @@ public class userSettings extends AppCompatActivity {
 
         daoUser = new DAOUser();
 
-        FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @SuppressLint({"SetTextI18n", "ResourceType"})
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                user = (User) snapshot.getValue(User.class);
-                name = findViewById(R.id.userName);
-                desc = findViewById(R.id.userDesc);
-                age = findViewById(R.id.userAge);
-                sex = findViewById(R.id.userSex);
-
-
-                male = findViewById(R.id.male);
-                female = findViewById(R.id.female);
-
-                if(!TextUtils.isEmpty(user.getSex())) {
-                    if(user.getSex().equals("Male")) {
-                        sex.check(male.getId());
-                    } else {
-                        sex.check(female.getId());
-                    }
-                }
-
-                name.setText(user.getFirstName());
-                desc.setText(user.getDescription());
-                age.setText(user.getAge());
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
+        setSavedUserSettings();
 
         save = findViewById(R.id.saveData);
 
         db = FirebaseDatabase.getInstance();
 
+        setSaveClick();
+    }
+
+    private void setSaveClick() {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +88,15 @@ public class userSettings extends AppCompatActivity {
                 user.setSex(sexValue);
                 user.setDescription(descValue);
 
-                FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("firstName", user.getFirstName());
+                hashMap.put("age", user.getAge());
+                hashMap.put("sex", user.getSex());
+                hashMap.put("description", user.getDescription());
+
+
+
+                FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
@@ -128,6 +107,41 @@ public class userSettings extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    private void setSavedUserSettings() {
+        DAOUser.usersDB.child(daoUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint({"SetTextI18n", "ResourceType"})
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                user = (User) snapshot.getValue(User.class);
+                name = findViewById(R.id.userName);
+                desc = findViewById(R.id.userDesc);
+                age = findViewById(R.id.userAge);
+                sex = findViewById(R.id.userSex);
+
+
+                male = findViewById(R.id.male);
+                female = findViewById(R.id.female);
+
+                if(!TextUtils.isEmpty(user.getSex())) {
+                    if(user.getSex().equals("Male")) {
+                        sex.check(male.getId());
+                    } else {
+                        sex.check(female.getId());
+                    }
+                }
+
+                name.setText(user.getFirstName());
+                desc.setText(user.getDescription());
+                age.setText(user.getAge());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

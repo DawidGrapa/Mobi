@@ -5,13 +5,12 @@ import android.content.Context;
 
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.mobi.tabs.Matches;
-import com.example.mobi.tabs.Pairing;
-import com.example.mobi.tabs.UserProfile;
+import com.example.mobi.matches.MatchesFragment;
+import com.example.mobi.pairing.PairingFragment;
+import com.example.mobi.user.UserProfileFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -33,13 +32,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = new UserProfile();
+                fragment = new UserProfileFragment();
                 break;
             case 1:
-                fragment = new Pairing();
+                fragment = new PairingFragment();
                 break;
             case 2:
-                fragment = new Matches();
+                fragment = new MatchesFragment();
                 break;
         }
 

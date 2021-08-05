@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/appBg"
     android:orientation="vertical"
-    tools:context=".StartingScreen"
+    tools:context=".ui.main.StartingScreenActivity"
     android:layout_gravity="center">
 
     <LinearLayout

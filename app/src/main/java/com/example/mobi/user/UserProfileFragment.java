@@ -1,4 +1,4 @@
-package com.example.mobi.tabs;
+package com.example.mobi.user;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -24,24 +24,32 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
-public class UserProfile extends Fragment {
+public class UserProfileFragment extends Fragment {
 
-    public UserProfile() {
+    public UserProfileFragment() {
     }
 
     User user;
     ImageView userImage;
+    DAOUser daoUser;
+    View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         LayoutInflater lf = getActivity().getLayoutInflater();
-        View view =  lf.inflate(R.layout.fragment_user_profile, container, false); //pass the correct layout name for the fragment
+        view =  lf.inflate(R.layout.fragment_user_profile, container, false); //pass the correct layout name for the fragment
 
-        DAOUser daoUser = new DAOUser();
+        daoUser = new DAOUser();
 
-        FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).addValueEventListener(new ValueEventListener() {
+        setUserProfile();
+
+        return view;
+    }
+
+    private void setUserProfile() {
+        DAOUser.usersDB.child(daoUser.getUid()).addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -72,10 +80,6 @@ public class UserProfile extends Fragment {
 
             }
         });
-
-        return view;
     }
-
-
 
 }

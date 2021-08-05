@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_margin="10dp"
     android:layout_height="wrap_content"
-    android:background="#B57D7D">
+    android:background="@color/buttonBg">
 
     <ImageView
         android:id="@+id/matchIMG"
@@ -17,8 +17,7 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:layout_gravity="top"
-        android:text="DUPA"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:id="@+id/matchID"/>
 
 </LinearLayout>

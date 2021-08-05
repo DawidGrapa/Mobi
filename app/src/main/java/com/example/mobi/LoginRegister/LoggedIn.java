@@ -1,4 +1,4 @@
-package com.example.mobi;
+package com.example.mobi.LoginRegister;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.mobi.LoginRegister.LoginActivity;
+import com.example.mobi.R;
 import com.example.mobi.databinding.ActivityLoggedInBinding;
 import com.example.mobi.user.DAOUser;
 import com.example.mobi.user.User;
@@ -42,6 +43,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 
@@ -65,43 +67,51 @@ public class LoggedIn extends AppCompatActivity {
 
         if(firebaseAuth.getCurrentUser() != null) {
 
-            storageReference = FirebaseStorage.getInstance().getReference().child(User.class.getSimpleName()).child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-
-            binding = ActivityLoggedInBinding.inflate(getLayoutInflater());
-            setContentView(binding.getRoot());
-
-            daoUser = new DAOUser();
-
-            SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-            ViewPager viewPager = binding.viewPager;
-            viewPager.setAdapter(sectionsPagerAdapter);
-            TabLayout tabs = binding.tabs;
-            tabs.setupWithViewPager(viewPager);
-
-            viewPager.setCurrentItem(1);
-
-            tabs.getTabAt(0).setIcon(R.drawable.ic_user);
-            tabs.getTabAt(1).setIcon(R.drawable.ic_fire);
-            tabs.getTabAt(2).setIcon(R.drawable.ic_speak);
-
-            FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).addValueEventListener(new ValueEventListener() {
-                @SuppressLint({"SetTextI18n", "ResourceType"})
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    user = (User) snapshot.getValue(User.class);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            startApp();
 
         } else {
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            finish();
+            finishApp();
         }
 
+    }
+
+    private void finishApp() {
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+    }
+
+    private void startApp() {
+        storageReference = FirebaseStorage.getInstance().getReference().child(User.class.getSimpleName()).child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+
+        binding = ActivityLoggedInBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        daoUser = new DAOUser();
+
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        ViewPager viewPager = binding.viewPager;
+        viewPager.setAdapter(sectionsPagerAdapter);
+        TabLayout tabs = binding.tabs;
+        tabs.setupWithViewPager(viewPager);
+
+        viewPager.setCurrentItem(1);
+
+        tabs.getTabAt(0).setIcon(R.drawable.ic_user);
+        tabs.getTabAt(1).setIcon(R.drawable.ic_fire);
+        tabs.getTabAt(2).setIcon(R.drawable.ic_speak);
+
+        FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @SuppressLint({"SetTextI18n", "ResourceType"})
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                user = (User) snapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void logout(View view) {
@@ -146,7 +156,9 @@ public class LoggedIn extends AppCompatActivity {
                         Uri downloadUri = task.getResult();
                         String mUri = downloadUri.toString();
                         user.setImageUri(mUri);
-                        FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).setValue(user);
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("imageUri", user.getImageUri());
+                        FirebaseDatabase.getInstance().getReference().child(User.class.getSimpleName()).child(daoUser.getUid()).updateChildren(hashMap);
                     }
                 }
             });
@@ -168,5 +180,4 @@ public class LoggedIn extends AppCompatActivity {
         }
 
     }
-
 }
