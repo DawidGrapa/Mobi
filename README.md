@@ -18,8 +18,9 @@ Clone project, open in Android Studio, choose device and have fun :)
 
 ### Matching screen:
 
-![image](https://user-images.githubusercontent.com/72798812/142232742-697651e7-fb50-438e-b355-09e29b7466a2.png)
-![Matching](https://user-images.githubusercontent.com/72798812/142233774-f56f83c1-db47-40cb-8203-f897a040c2a4.gif)
+![image](https://user-images.githubusercontent.com/72798812/142241705-af656344-b465-420f-a894-a9361a7a8c48.png)
+![Matching](https://user-images.githubusercontent.com/72798812/142242017-0ab3750b-3300-4770-ba4e-c1b4e86c4053.gif)
+
 
 ### RealTime chat:
 
