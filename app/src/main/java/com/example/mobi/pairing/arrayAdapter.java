@@ -57,6 +57,9 @@ public class arrayAdapter extends ArrayAdapter<Card> {
         if(user.getDescription()!=null) {
             if(user.getDescription().length() > 100)
                 desc.setText(user.getDescription().substring(0, 100));
+            else {
+                desc.setText(user.getDescription());
+            }
         }
 
         return convertView;
